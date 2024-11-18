@@ -1,0 +1,28 @@
+/* nav bar styling */
+#mainNav {
+    text-align: center;
+    background-color: cornflowerblue;
+}
+#mainNav ul li {
+    display: inline-block;
+    padding: 10px;
+}
+#mainNav li:hover {
+    background-color: darkcyan;
+}
+
+/* header styling */
+.header {
+    background-color: darkseagreen;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+/* footer styling */ 
+.footer {
+    background-color: darkseagreen;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
