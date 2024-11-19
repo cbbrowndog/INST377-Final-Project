@@ -25,4 +25,27 @@
     color: white;
     padding: 20px 0;
     text-align: center;
+    margin: 5px;
+}
+
+.mainContent{
+    display: flex;
+    flex-direction: row;
+    height: 70vh;
+    width: 100%;
+}
+
+/* adjusting map height on home page */
+#map {
+    flex: 3;
+    height: 500px;
+    margin: 5px;
+}
+
+#infoContainer {
+    flex: 1;
+    padding: 10px;
+    background-color: seashell;
+    overflow-y: auto;
+    margin: 5px;
 }

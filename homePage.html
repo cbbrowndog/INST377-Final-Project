@@ -2,7 +2,29 @@
     <head>
 
         <title>Home</title>
-        
+
+        <!-- Link to library -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+
+        <!-- Library Script -->
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+        <!-- Javascript for Funcitons -->
+        <script src="finalJava.js" defer></script>
+
+        <!--Set map height, required by library-->
+        <style>
+            #map { 
+                height: 300px; 
+                margin-left: 12.5%;
+                margin-right: 12.5%;
+            }
+        </style>
+
         <!-- Link to CSS Sheet -->
         <link rel="stylesheet" href="finalStyling.css">
 
@@ -11,27 +33,24 @@
     </head>
 
     <body>
-        <!-- Pop Spot Header -->
-        <header class="header">
-            <h1> Pop Spot</h1>
-        </header>
+        <!-- Header Placeholder-->
+        <div id="header"></div>
 
-        <!-- Main Navigation Bar -->
-        <nav id="mainNav">
-            <ul>
-                <li><a href="homePage.html">Home</a></li>                
-                <li><a href="searchPage.html">Search</a></li>
-                <li><a href="aboutPage.html">About</a></li>
-                <li><a href="newsletterSignupPage.html">Newsletter Signup</a></li>
-                <li><a href="helpPage.html">Help</a></li>
+        <!-- Main Content Container -->
+        <div class="mainContent">
 
-            </ul>
-        </nav>
+             <!-- Map Container -->
+             <div id="map"></div>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <p>instert footer content here </p>
-        </footer>
+            <!-- Addtional Content Container -->
+            <div id="infoContainer">
+                <p>Additoinal content goes here.</p>
+            </div>
+
+        </div>
+       
+        <!-- Footer Placeholder -->
+        <div id="footer"></div>
 
     </body>
 </html>
