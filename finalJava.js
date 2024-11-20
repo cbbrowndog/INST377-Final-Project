@@ -36,6 +36,7 @@ window.onload = function () {
     } 
 };
 
+// Timeout function for the Newsletter Success Page to redirect Home after 5 seconds 
 if (window.location.pathname.includes('newsletterSuccessPage.html')) {
     setTimeout(function () {
         window.location.href = "homePage.html";
