@@ -33,5 +33,11 @@ window.onload = function () {
     // Only initialize the map on pages with the #map element
     if (document.getElementById('map')) {
         newMap();
-    }
+    } 
 };
+
+if (window.location.pathname.includes('newsletterSuccessPage.html')) {
+    setTimeout(function () {
+        window.location.href = "homePage.html";
+    }, 5000);
+}
