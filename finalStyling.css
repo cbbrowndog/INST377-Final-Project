@@ -1,51 +1,135 @@
-/* nav bar styling */
-#mainNav {
-    text-align: center;
-    background-color: cornflowerblue;
-}
-#mainNav ul li, #footerNav ul li {
-    display: inline-block;
-    padding: 10px;
-}
-#mainNav li:hover, #footerNav li:hover {
-    background-color: darkcyan;
+/* general */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Verdana', sans-serif;
 }
 
-/* header styling */
+body {
+    background-color: #e9f5e3; 
+    color: #2d3e2f;
+    line-height: 1.6;
+    padding: 0;
+    margin: 0;
+}
+
 .header {
-    background-color: darkseagreen;
-    color: white;
-    padding: 20px 0;
+    background: linear-gradient(90deg, #4caf50, #81c784);
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bolder;
+}
+
+.home-title {
+    font-family: 'Verdana', sans-serif;
+    font-size: 2.5rem;
+    color: #2d3e2f;
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: bolder;
+}
+
+/* main navigation */
+#mainNav {
+    background-color: #2d3e2f;
+    color: #fff;
+    padding: 0.5rem 0;
     text-align: center;
 }
 
-/* footer styling */ 
-.footer {
-    background-color: darkseagreen;
-    color: white;
-    padding: 20px 0;
-    text-align: center;
-    margin: 5px;
-}
-
-.mainContent{
+#mainNav ul {
+    list-style: none;
     display: flex;
-    flex-direction: row;
-    height: 70vh;
+    justify-content: center;
+}
+
+#mainNav ul li {
+    margin: 0 1rem;
+}
+
+#mainNav ul li a {
+    color: #e9f5e3;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+#mainNav ul li a:hover {
+    color: #81c784;
+}
+
+/* main content and forms */
+.mainContent {
+    padding: 2rem;
+    text-align: center;
+}
+
+form {
+    background-color: #ffffff;
+    padding: 2rem;
+    margin: 2rem auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+}
+
+form label {
+    display: block;
+    font-weight: bold; 
+    margin-bottom: 0.5rem;
+    color: #2d3e2f; 
+}
+
+form input, form select, form button {
     width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #a3d9a5; 
+    border-radius: 4px;
+    font-size: 1rem;
 }
 
-/* adjusting map height on home page */
+form button {
+    background-color: #4caf50;
+    color: #fff;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #81c784;
+}
+
+#footer {
+    background-color: #2d3e2f;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+    font-weight: bold;
+}
+
+/* map and responsive designs */
 #map {
-    flex: 3;
-    height: 500px;
-    margin: 5px;
+    border: 2px solid #4caf50; 
+    border-radius: 8px;
 }
 
-#infoContainer {
-    flex: 1;
-    padding: 10px;
-    background-color: seashell;
-    overflow-y: auto;
-    margin: 5px;
+@media (max-width: 768px) {
+    #mainNav ul {
+        flex-direction: column;
+    }
+
+    .mainContent {
+        padding: 1rem;
+    }
+
+    form {
+        padding: 1rem;
+    }
 }
+
