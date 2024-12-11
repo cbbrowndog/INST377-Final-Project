@@ -113,9 +113,6 @@ if (window.location.pathname.includes('newsletterSuccessPage.html')) {
     }, 5000);
 }
 
-
-
-
 // Function to load Newsletter Form Data into the Supabase 
 
 const host = window.location.origin;

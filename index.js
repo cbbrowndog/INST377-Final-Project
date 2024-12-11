@@ -16,27 +16,27 @@ app.use(express.json());
 // Serve static files from the "public" folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve the home page
+// Home page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'homePage.html'));
 });
 
-// Serve the newsletter signup page
+// Newsletter signup page
 app.get('/signup', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'newsletterSignupPage.html'));
 });
 
-// Serve the newsletter success page
+// Newsletter success page
 app.get('/success', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'newsletterSuccessPage.html'));
 });
 
-// Serve the search page
+// Search page
 app.get('/search', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'searchPage.html'));
 });
 
-// Serve the help page
+// Help page
 app.get('/help', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'helpPage.html'));
 });
@@ -50,9 +50,9 @@ app.get('/about', (req, res) => {
 app.post('/newsletter', async (req, res) => {
   const { firstName, lastName, email, city, state, interests } = req.body;
 
-  // Insert data into the "new_newsletter" table
+  // Insert data into the table
   const { data, error } = await supabase
-    .from('newsletter_subscribers') // Use the correct table name
+    .from('newsletter_subscribers') 
     .insert([
       {
         first_name: firstName,
@@ -60,7 +60,7 @@ app.post('/newsletter', async (req, res) => {
         email: email,
         city: city,
         state: state,
-        interests: interests.join(', '), // Convert array to a string
+        interests: interests.join(', '), 
       }
     ]);
 
