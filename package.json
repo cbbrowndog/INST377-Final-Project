@@ -1,8 +1,8 @@
 {
   "name": "inst377-final-project",
   "version": "1.0.0",
-  "description": "Node for final project ",
-  "main": "finalJava.js",
+  "description": "Node for final project",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/cbbrowndog/INST377-Final-Project/issues"
   },
-  "homepage": "https://github.com/cbbrowndog/INST377-Final-Project#readme"
+  "homepage": "https://github.com/cbbrowndog/INST377-Final-Project#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.47.3",
+    "chart.js": "^4.4.7",
+    "leaflet": "^1.9.4"
+  },
+  "keywords": []
 }

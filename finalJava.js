@@ -112,3 +112,46 @@ if (window.location.pathname.includes('newsletterSuccessPage.html')) {
         window.location.href = "homePage.html";
     }, 5000);
 }
+
+
+// // Initialize Supabase client
+// const { createClient } = require('@supabase/supabase-js');
+// const supabase = createClient('https://https://sihivoxdppaspanawrxx.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNpaGl2b3hkcHBhc3BhbmF3cnh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM4NTY1NjAsImV4cCI6MjA0OTQzMjU2MH0.W3cepaW-IDOw9P7-uKSqJvOPB66HS277w95oXEZSrY4');
+
+// // Function to handle form submission
+// async function handleFormSubmit(event) {
+//     event.preventDefault(); // Prevent immediate redirection
+
+//     const form = document.getElementById('newsletter-form');
+
+//     // Gather form data
+//     const firstName = form['first-name'].value.trim();
+//     const lastName = form['last-name'].value.trim();
+//     const email = form['email'].value.trim();
+//     const city = form['city'].value.trim();
+//     const state = form['state'].value;
+//     const interests = Array.from(form.querySelectorAll('input[name="interests"]:checked'))
+//                            .map(input => input.value)
+//                            .join(', ');
+
+//     // Insert data into Supabase
+//     const { error } = await supabase.from('your_table_name').insert([
+//         {
+//             customer_email: email,
+//             customer_first_name: firstName,
+//             customer_last_name: lastName,
+//             customer_city: city,
+//             customer_state: state,
+//             customer_interests: interests,
+//         },
+//     ]);
+
+//     if (error) {
+//         console.error('Error inserting data:', error);
+//         alert('There was an error submitting your information. Please try again.');
+//         return; // Stop the form submission
+//     }
+
+//     // Proceed with the form redirection to the success page
+//     form.submit();
+// }
