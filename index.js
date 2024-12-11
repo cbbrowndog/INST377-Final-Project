@@ -1,65 +1,50 @@
 const express = require('express');
+const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
-const bodyParser = require('body-parser');
-
 const app = express();
 const port = 3000;
 
-// Middleware for parsing JSON and serving static files
-app.use(bodyParser.json());
-app.use(express.static(__dirname + '/public'));
-
 // Supabase client setup
-const supabaseUrl = 'https://rqkwwyoaeswcmxqprmrl.supabase.co';
-const supabaseKey =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJxa3d3eW9hZXN3Y214cXBybXJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE3OTQ3MzUsImV4cCI6MjA0NzM3MDczNX0.lFCNsUJeZjfkpjqGpt7JMwrRFTwehd-WK4feasXTwf8';
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient('your-supabase-url', 'your-supabase-api-key');
 
-// Serve HTML page for the home route
-app.get('/', (req, res) => {
-  res.sendFile('public/INST377-Week12-Customers.html', { root: __dirname });
-});
+// Middleware to parse JSON requests
+app.use(express.json());
 
-// Fetch customers from Supabase database
-app.get('/customers', async (req, res) => {
-  console.log('Attempting to get all customers.');
+// Serve static files from the "public" folder
+app.use(express.static(path.join(__dirname, 'public')));
 
-  const { data, error } = await supabase.from('customer').select();
+// Endpoint to create a newsletter entry
+app.post('/newsletter', async (req, res) => {
+  const { firstName, lastName, email, city, state, interests } = req.body;
 
-  if (error) {
-    console.log('Error:', error);
-    res.status(500).send(error);
-  } else {
-    console.log('Successfully Retrieved Data');
-    res.json(data);
-  }
-});
-
-// Add a new customer to the Supabase database
-app.post('/customer', async (req, res) => {
-  console.log('Attempting to add Customer.');
-  console.log('Request', req.body);
-
-  const { firstName, lastName } = req.body;
-
+  // Insert data into the "new_newsletter" table
   const { data, error } = await supabase
-    .from('customer')
-    .insert({
-      customer_first_name: firstName,
-      customer_last_name: lastName,
-    })
-    .select();
+    .from('new_newsletter') // Use the correct table name
+    .insert([
+      {
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        city: city,
+        state: state,
+        interests: interests.join(', '), // Convert array to a string
+      }
+    ]);
 
   if (error) {
-    console.log('Error:', error);
-    res.status(500).send(error);
-  } else {
-    console.log('Successfully Added Customer');
-    res.json(data);
+    return res.status(400).json({ error: error.message });
   }
+
+  // Redirect to the success page after successful form submission
+  res.redirect('/success');
+});
+
+// Serve the static success page
+app.get('/success', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'newsletterSuccessPage.html'));
 });
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server is running at http://localhost:${port}`);
 });
