@@ -5,6 +5,8 @@ const app = express();
 const port = 3001;
 
 // Supabase client setup
+
+// Our api url followed by api key 
 const supabase = createClient(
   'https://sihivoxdppaspanawrxx.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNpaGl2b3hkcHBhc3BhbmF3cnh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM4NTY1NjAsImV4cCI6MjA0OTQzMjU2MH0.W3cepaW-IDOw9P7-uKSqJvOPB66HS277w95oXEZSrY4'
