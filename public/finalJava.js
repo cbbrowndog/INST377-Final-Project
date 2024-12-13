@@ -162,3 +162,54 @@ async function handleFormSubmit(event) {
     }
   }
   
+  // Function to fetch state data for chart visualization
+async function fetchChartData() {
+    const response = await fetch(`${host}/chart-data`);
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Chart data received:', data);
+      
+      // Call the function to generate the chart with this data
+      generateChart(data);
+    } else {
+      console.error('Error fetching chart data:', response.statusText);
+    }
+  }
+  
+  // Generate chart using chart.js
+  function generateChart(data) {
+    const states = data.map(item => item.state);
+    const stateCounts = {};
+  
+    // Count the occurrences of each state
+    states.forEach(state => {
+      stateCounts[state] = (stateCounts[state] || 0) + 1;
+    });
+  
+    const labels = Object.keys(stateCounts);
+    const counts = Object.values(stateCounts);
+  
+    // Create bar chart
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Number of Subscribers',
+          data: counts,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          }
+        }
+      }
+    });
+  }
+  
+  // Call the fetchChartData function when the page is loaded
+  fetchChartData();
