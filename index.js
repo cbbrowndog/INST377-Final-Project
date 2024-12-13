@@ -1,3 +1,4 @@
+// Import express and supabase
 const express = require('express');
 const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
@@ -39,9 +40,9 @@ app.get('/search', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'searchPage.html'));
 });
 
-// Help page
-app.get('/help', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'helpPage.html'));
+// Chart page
+app.get('/chart', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'chartPage.html'));
 });
 
 // Serve the about page
@@ -73,6 +74,19 @@ app.post('/newsletter', async (req, res) => {
 
   // Redirect to the success page after successful form submission
   res.redirect('/success');
+});
+
+// Endpoint to get state data for chart visualization
+app.get('/chart-data', async (req, res) => {
+  const { data, error } = await supabase
+    .from('newsletter_subscribers')
+    .select('state');
+
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
+
+  res.json(data); // Send the data back as JSON
 });
 
 // Start the server
