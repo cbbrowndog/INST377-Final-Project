@@ -58,17 +58,17 @@ function fetchRecreation(map) {
                     const lat = recArea.RecAreaLatitude;
                     const lng = recArea.RecAreaLongitude;
                     const name = recArea.RecAreaName;
-                    const url = recArea.RecAreaURL || '#';
+                    const url = recArea.RecAreaEmail || 'No email available';
 
 
-                    console.log(`Recreation Area: ${name}, Latitude: ${lat}, Longitude: ${lng}`); // Log each recreation area
+                    console.log('Recreation Area: ${name}, Latitude: ${lat}, Longitude: ${lng}, Email: ${email}'); // Log each recreation area
 
 
                     // Add markers for each recreation area
                     const marker = L.marker([lat, lng]).addTo(map);
                     marker.bindPopup(`
                         <strong>${name}</strong><br>
-                        <a href="${url}" target="_blank">More Info</a>
+                        <span>${url}</span>
                     `);
                 });
             } else {
