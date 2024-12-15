@@ -7,7 +7,7 @@
 - Fahima Chariwala
 
 ## Vercel Link:
-https://inst-377-final-project-testing-deploy-dfvl3el6u.vercel.app/homePage.html 
+inst-377-final-project-testing-deploy.vercel.app
 
 ## Description:
 **Pop Spot** is a web application designed to help users in the United States discover events and recreational activities in their area. By leveraging the **Ticketmaster API** for event data and the **Recreational Database API** (RIDB) for outdoor activity information, **Pop Spot** enables users to explore concerts, festivals, sporting events, and outdoor activities happening nearby. This web application also allows users to subscribe to newsletters with their event and recreational preferences.
