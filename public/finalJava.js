@@ -11,12 +11,17 @@ function newMap(){
 
     fetchEvents(map);
     fetchRecreation(map);
+    handleQuickFinderForm(map);
 }
 
 /* Fetch Events from Ticketmaster API */ 
-function fetchEvents(map) {
+function fetchEvents(map, lat = 37.0902, lon = -95.7129, date = null) {
     const apiKey = "MJqQ6NUkUDHFon1F2xTypEX2NS7FGlGn"; //do we need to hide this later 
-    const url = `https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&size=10&apikey=${apiKey}`;
+    var url = `https://app.ticketmaster.com/discovery/v2/events.json?latlong=${lat},${lon}&apikey=${apiKey}`;
+
+    if (date) {
+      url += `&startDateTime=${date}T00:00:00Z&endDateTime=${date}T23:59:59Z`;
+    }
 
     fetch(url)
         .then(response => {
@@ -43,9 +48,9 @@ function fetchEvents(map) {
 }
 
 /* Fetch Recreation Areas from RIDB API */
-function fetchRecreation(map) {
+function fetchRecreation(map, lat = 37.0902, lon = -95.7129) {
     const apiKey = "045a030e-f408-4f68-8979-07c5c0138831"; // Remember to hide this later
-    const url = `https://ridb.recreation.gov/api/v1/recareas?query=USA&limit=10&offset=0&radius=10&lastupdated=10-01-2018&apikey=${apiKey}`;
+    const url = `https://ridb.recreation.gov/api/v1/recareas?latitude=${lat}&longitude=${lon}&radius=10&apikey=${apiKey}`;
 
 
     fetch(url)
@@ -80,6 +85,137 @@ function fetchRecreation(map) {
         });
 }
 
+function handleQuickFinderForm(map) {
+  const form = document.getElementById('quickFinderForm');
+
+  form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const location = document.getElementById('location').value.trim();
+      const interest = document.getElementById('interest').value;
+      const date = document.getElementById('date').value;
+
+      if (!location) {
+          alert("Please enter a location.");
+          return;
+      }
+
+      // Geocode location
+      fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}&countrycodes=us`)
+          .then(response => response.json())
+          .then(geoData => {
+              if (geoData.length === 0) {
+                  alert("Location not found. Please try again.");
+                  return;
+              }
+
+              const lat = parseFloat(geoData[0].lat);
+              const lon = parseFloat(geoData[0].lon);
+
+              map.setView([lat, lon], 6);
+              //markers.clearLayers();
+
+              if (interest === "events") {
+                  fetchEvents(map, lat, lon, date);
+              } else if (interest === "recreation") {
+                  fetchRecreation(map, lat, lon);
+              }
+          })
+          .catch(error => console.error("Error fetching geolocation:", error));
+  });
+}
+
+function handleSearchForm() {
+  const form = document.getElementById('searchForm');
+  const resultsTable = document.getElementById('resultsTable').querySelector('tbody');
+
+  form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const location = document.getElementById('location').value.trim();
+      const date = document.getElementById('date').value;
+      const interest = document.getElementById('interest').value;
+
+      if (!location) {
+          alert("Please enter a location.");
+          return;
+      }
+
+      resultsTable.innerHTML = ""; 
+
+      fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`)
+          .then(response => response.json())
+          .then(geoData => {
+
+              const lat = parseFloat(geoData[0].lat);
+              const lon = parseFloat(geoData[0].lon);
+
+              if (interest === "events") {
+                  fetchEventsData(lat, lon, date, resultsTable);
+              } else if (interest === "recreation") {
+                  fetchRecreationData(lat, lon, resultsTable);
+              }
+          })
+  });
+}
+
+function fetchEventsData(lat, lon, date, resultsTable) {
+  const apiKey = "MJqQ6NUkUDHFon1F2xTypEX2NS7FGlGn";
+  let url = `https://app.ticketmaster.com/discovery/v2/events.json?latlong=${lat},${lon}&apikey=${apiKey}`;
+
+  if (date) {
+      url += `&startDateTime=${date}T00:00:00Z&endDateTime=${date}T23:59:59Z`;
+  }
+
+  fetch(url)
+      .then(response => response.json())
+      .then(data => {
+          if (data._embedded && data._embedded.events) {
+              data._embedded.events.forEach(event => {
+                  const venue = event._embedded.venues[0];
+                  const row = `
+                      <tr>
+                          <td>${event.name}</td>
+                          <td>${venue.city.name}, ${venue.state.name}</td>
+                          <td>${event.dates.start.localDate || "N/A"}</td>
+                          <td><a href="${event.url}" target="_blank">Details</a></td>
+                      </tr>`;
+                  resultsTable.insertAdjacentHTML('beforeend', row);
+              });
+          } else {
+              resultsTable.innerHTML = "<tr><td colspan='4'>No events found.</td></tr>";
+          }
+      })
+      .catch(error => console.error("Error fetching events:", error));
+}
+
+/*  Recreation Areas for Search Page */
+function fetchRecreationData(lat, lon, resultsTable) {
+  const apiKey = "045a030e-f408-4f68-8979-07c5c0138831";
+  const url = `https://ridb.recreation.gov/api/v1/recareas?latitude=${lat}&longitude=${lon}&radius=10&apikey=${apiKey}`;
+
+  fetch(url)
+      .then(response => response.json())
+      .then(data => {
+          if (data.RECDATA) {
+              data.RECDATA.forEach(area => {
+                console.log(area);
+                  const row = `
+                      <tr>
+                          <td>${area.RecAreaName}</td>
+                          <td>${area.venue || "N/A"}</td>
+                          <td>N/A</td>
+                          <td><a href="${area.RecAreaEmail || "#"}">Details</a></td>
+                      </tr>`;
+                  resultsTable.insertAdjacentHTML('beforeend', row);
+              });
+          } else {
+              resultsTable.innerHTML = "<tr><td colspan='4'>No recreation areas found.</td></tr>";
+          }
+      })
+      .catch(error => console.error("Error fetching recreation data:", error));
+}
+
 /* Load header and footer on every page */
 function loadContent() {
     // Load Header
@@ -103,6 +239,7 @@ window.onload = function () {
     // Only initialize the map on pages with the #map element
     if (document.getElementById('map')) {
         newMap();
+        
     } 
 };
 
@@ -213,3 +350,7 @@ async function fetchChartData() {
   
   // Call the fetchChartData function when the page is loaded
   fetchChartData();
+
+  if (document.getElementById('searchForm')) {
+    handleSearchForm();
+  }

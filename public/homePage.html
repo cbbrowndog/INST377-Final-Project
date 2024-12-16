@@ -36,17 +36,33 @@
         <!-- Header Placeholder-->
         <div id="header"></div>
 
-        <!-- Main Content Container -->
-        <div class="mainContent">
-
-             <!-- Map Container -->
-             <div id="map"></div>
-
-            <!-- Addtional Content Container -->
-            <div id="infoContainer">
-                <p>Find events here!</p>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Welcome to Pop Spot</h2>
+                <p>Your ultimate destination for discovering exciting music events and activities nearby!</p>
+                <a href="searchpage.html" class="btn-primary">Explore Now</a>
             </div>
+        </section>
 
+        <!-- Main Content Container -->
+        <div class="map-and-finder">
+            <div id="map"></div>
+            <div id="quickFinder">
+                <h2>Quick Finder</h2>
+                <form id="quickFinderForm">
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" placeholder="Enter a location" />
+                    <label for="interest">Interest:</label>
+                    <select id="interest">
+                        <option value="events">Events</option>
+                        <option value="recreation">Recreation</option>
+                    </select>
+                    <label for="date">Date:</label>
+                    <input type="date" id="date">
+                    <button type="submit">Find</button>
+                </form>
+            </div>
         </div>
        
         <!-- Footer Placeholder -->
