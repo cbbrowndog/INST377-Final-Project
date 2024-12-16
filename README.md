@@ -25,8 +25,8 @@ This documentation is for developers who are taking over the **Pop Spot** system
 Clone the repository to your local machine using Git:
 
 ```bash
-git clone https://github.com/yourusername/pop-spot.git
-cd pop-spot
+git clone https://github.com/cbbrowndog/INST377-Final-Project
+cd INST377-Final-Project
 ```
 
 ### 2. Install Dependencies
